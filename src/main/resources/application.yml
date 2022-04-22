@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/flywheel_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: bellwin
+    password: flywheel
+
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: create
+      use-new-id-generate-mappings: false
+    show-sql: true
+    properties:
+      hibernate.format_sql: true

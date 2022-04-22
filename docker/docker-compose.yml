@@ -1,0 +1,22 @@
+# 파일 규격 버전
+version: "3.7"
+# 이 항목 밑에 실행하려는 컨테이너들을 정의
+services: 
+  # 서비스 명
+  db:
+    image: mysql:8.0.28 # 사용할 이미지
+    container_name: mysql-container # 컨테이너 이름 설정
+    ports: # 접근 포트 설정(외부에서 접속하는 포트를 Docker 내부 포트와 매칭)
+      - "3306:3306"
+    environment: # -e 옵션: 컨테이너 내부에서 사용할 인자
+      - MYSQL_USER=bellwin
+      - MYSQL_DATABASE=flywheel_db
+      - MYSQL_PASSWORD=flywheel
+      - MYSQL_ROOT_PASSWORD=flywheel
+      - TZ=Asia/Seoul
+    command: # 명령어 실행 (한글 인코딩 관련)
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+            
+    volumes: # -v 옵션 (다렉토리 마운트 설정), local 디렉토리와 컨테이너 경로 매칭
+      - ./db_data:/var/lib/mysql
