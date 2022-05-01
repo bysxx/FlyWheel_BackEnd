@@ -18,11 +18,11 @@ footer {
 }
 
 #wrap {
-    padding: 15% 0%;
+    padding: 15% 0;
 }
 
 #wrap > * {
-    margin: 3% 0%;
+    margin: 3% 0;
 }
 
 .search {

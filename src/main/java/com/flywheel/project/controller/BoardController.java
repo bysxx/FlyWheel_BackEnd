@@ -10,16 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@AllArgsConstructor
 public class BoardController {
+
     private BoardService boardService;
 
-    /* 게시글 목록 */
+    public BoardController(BoardService boardService) {
+        this.boardService = boardService;
+    }
+
     @GetMapping("/")
     public String list(Model model) {
-        List<BoardDto> boardList = boardService.getBoardlist();
+        List<BoardDto> boardDtoList = boardService.getBoardList();
+        model.addAttribute("boardList", boardDtoList);
 
-        model.addAttribute("boardList", boardList);
         return "board/list.html";
     }
 
@@ -31,51 +34,44 @@ public class BoardController {
     @PostMapping("/post")
     public String write(BoardDto boardDto) {
         boardService.savePost(boardDto);
-
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/post/edit/{no}" , method = RequestMethod.GET)
-    public String edit(@PathVariable("no") Long no, Model model) {
-        BoardDto boardDTO = boardService.getPost(no);
+    @GetMapping("/post/{no}")
+    public String detail(@PathVariable("no") Long id, Model model) {
+        BoardDto boardDto = boardService.getPost(id);
 
-        model.addAttribute("boardDto", boardDTO);
-        return "board/update.html";
-    }
-
-    @RequestMapping(value = "/post/edit/{no}" , method = {RequestMethod.POST, RequestMethod.PUT})
-    public String update(BoardDto boardDTO) {
-        boardService.savePost(boardDTO);
-
-        return "redirect:/";
-    }
-
-    @RequestMapping(value = "/post/{no}" , method = RequestMethod.GET)
-    public String detail(@PathVariable("no") Long no, Model model) {
-        BoardDto boardDTO = boardService.getPost(no);
-
-        model.addAttribute("boardDto", boardDTO);
+        model.addAttribute("boardDto", boardDto);
         return "board/detail.html";
     }
 
-    @RequestMapping(value = "/post/{no}" , method = {RequestMethod.POST, RequestMethod.DELETE})
-    public String delete(@PathVariable("no") Long no) {
-        boardService.deletePost(no);
+    @GetMapping("/post/edit/{no}")
+    public String edit(@PathVariable("no") Long id, Model model) {
+        BoardDto boardDto = boardService.getPost(id);
+
+        model.addAttribute("boardDto", boardDto);
+        return "board/update.html";
+    }
+
+    @PutMapping("/post/edit/{no}")
+    public String update(BoardDto boardDto) {
+        boardService.savePost(boardDto);
+        return "redirect:/";
+    }
+
+    @DeleteMapping("/post/{no}")
+    public String delete(@PathVariable("no") Long id) {
+        boardService.deletePost(id);
 
         return "redirect:/";
     }
 
-    // 로그인 페이지
-    @RequestMapping(value = "/login")
-    public String loginpage(){
+    @GetMapping("/board/search")
+    public String search(@RequestParam(value = "keyword") String keyword, Model model) {
+       List<BoardDto> boardDtoList = boardService.searchPosts(keyword);
+       model.addAttribute("boardList", boardDtoList);
 
-        return "login/login.html";
+       return "board/list.html";
     }
 
-    // 회원가입 페이지
-    @RequestMapping(value = "/join")
-    public String join(){
-
-        return "login/join.html";
-    }
 }

@@ -1,6 +1,6 @@
 package com.flywheel.project.dto;
 
-import com.flywheel.project.domain.entity.BoardEntity;
+import com.flywheel.project.domain.entity.Board;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -17,8 +17,8 @@ public class BoardDto {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    public BoardEntity toEntity(){
-        return BoardEntity.builder()
+    public Board toEntity() { // dto에서 필요한 부분을 빌더패턴을 통해 entity로 만드는 역할
+        return Board.builder()
                 .id(id)
                 .writer(writer)
                 .title(title)
