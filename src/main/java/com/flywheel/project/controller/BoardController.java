@@ -18,34 +18,39 @@ public class BoardController {
         this.boardService = boardService;
     }
 
-    @GetMapping("/")
-    public String list(Model model) {
-        List<BoardDto> boardDtoList = boardService.getBoardList();
+    @GetMapping("/board")
+    public String list(Model model,
+                       @RequestParam(value="page", defaultValue = "1") Integer pageNum) {
+        List<BoardDto> boardDtoList = boardService.getBoardList(pageNum);
+        Integer[] pageList = boardService.getPageList(pageNum);
+
         model.addAttribute("boardList", boardDtoList);
+        model.addAttribute("pageList", pageList);
 
         return "board/list.html";
     }
 
-    @GetMapping("/post")
+    @GetMapping("/board/post")
     public String write() {
         return "board/write.html";
     }
 
-    @PostMapping("/post")
+    @PostMapping("/board/post")
     public String write(BoardDto boardDto) {
         boardService.savePost(boardDto);
         return "redirect:/";
     }
 
-    @GetMapping("/post/{no}")
+    @GetMapping("/board/post/{no}")
     public String detail(@PathVariable("no") Long id, Model model) {
         BoardDto boardDto = boardService.getPost(id);
 
         model.addAttribute("boardDto", boardDto);
         return "board/detail.html";
+
     }
 
-    @GetMapping("/post/edit/{no}")
+    @GetMapping("/board/post/edit/{no}")
     public String edit(@PathVariable("no") Long id, Model model) {
         BoardDto boardDto = boardService.getPost(id);
 
@@ -53,13 +58,13 @@ public class BoardController {
         return "board/update.html";
     }
 
-    @PutMapping("/post/edit/{no}")
+    @PutMapping("/board/post/edit/{no}")
     public String update(BoardDto boardDto) {
         boardService.savePost(boardDto);
         return "redirect:/";
     }
 
-    @DeleteMapping("/post/{no}")
+    @DeleteMapping("/board/post/{no}")
     public String delete(@PathVariable("no") Long id) {
         boardService.deletePost(id);
 
