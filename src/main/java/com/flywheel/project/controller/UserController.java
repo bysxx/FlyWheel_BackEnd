@@ -52,7 +52,8 @@ public class UserController {
      * @return
      */
     @GetMapping("/signup")
-    public String goSignup() {
+    public String goSignup(Model model) {
+        model.addAttribute("user", new UserDto());
         return "user/signup";
     }
 

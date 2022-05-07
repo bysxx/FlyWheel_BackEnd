@@ -1,6 +1,7 @@
 package com.flywheel.project.controller;
 
 import com.flywheel.project.dto.BoardDto;
+import com.flywheel.project.dto.UserDto;
 import com.flywheel.project.service.BoardService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,7 @@ import java.util.List;
 @Controller
 public class BoardController {
 
-    private BoardService boardService;
+    private final BoardService boardService;
 
     public BoardController(BoardService boardService) {
         this.boardService = boardService;
@@ -27,18 +28,18 @@ public class BoardController {
         model.addAttribute("boardList", boardDtoList);
         model.addAttribute("pageList", pageList);
 
-        return "board/list.html";
+        return "board/list";
     }
 
     @GetMapping("/board/post")
     public String write() {
-        return "board/write.html";
+        return "board/write";
     }
 
     @PostMapping("/board/post")
     public String write(BoardDto boardDto) {
         boardService.savePost(boardDto);
-        return "redirect:/";
+        return "redirect:/board";
     }
 
     @GetMapping("/board/post/{no}")
@@ -46,7 +47,7 @@ public class BoardController {
         BoardDto boardDto = boardService.getPost(id);
 
         model.addAttribute("boardDto", boardDto);
-        return "board/detail.html";
+        return "board/detail";
 
     }
 
@@ -55,7 +56,7 @@ public class BoardController {
         BoardDto boardDto = boardService.getPost(id);
 
         model.addAttribute("boardDto", boardDto);
-        return "board/update.html";
+        return "board/update";
     }
 
     @PutMapping("/board/post/edit/{no}")
@@ -76,7 +77,7 @@ public class BoardController {
        List<BoardDto> boardDtoList = boardService.searchPosts(keyword);
        model.addAttribute("boardList", boardDtoList);
 
-       return "board/list.html";
+       return "board/list";
     }
 
 }

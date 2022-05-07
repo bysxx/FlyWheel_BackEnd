@@ -14,10 +14,10 @@
              th:name="${_csrf.parameterName}"
              th:value="${_csrf.token}"
       />
-      <p th:if="${loginError}" class="error">Wrong user or password</p>
+      <p th:if="${loginError}" class="error">Wrong user or password <a th:href="@{/signup}">회원가입</a></p>
       <!-- 로그인 시 아이디의 name 애트리뷰트 값은 username -->
       <!-- 파라미터명을 변경하고 싶을 경우 config class formlogin()에서 .usernameParameter("") 명시 -->
-      <input type="text" name="username" placeholder="이메일 입력해주세요" />
+      <input type="text" name="username" placeholder="이메일 입력" />
       <input type="password" name="password" placeholder="비밀번호">
       <button type="submit">로그인</button>
     </form>

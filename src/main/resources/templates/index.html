@@ -20,6 +20,7 @@
 
         <!-- 인증된 사용자 -->
         <a sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/board}">게시판</a>
 
         <!-- 특정 권한의 사용자 -->
         <a sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/info}">내정보</a>

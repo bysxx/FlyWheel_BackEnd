@@ -18,13 +18,12 @@ public class BoardDto {
     private LocalDateTime modifiedDate;
 
     public Board toEntity() { // dto에서 필요한 부분을 빌더패턴을 통해 entity로 만드는 역할
-        Board board = Board.builder()
+        return Board.builder()
                 .id(id)
                 .writer(writer)
                 .title(title)
                 .content(content)
                 .build();
-        return board;
     }
 
     @Builder
