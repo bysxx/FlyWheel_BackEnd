@@ -14,7 +14,7 @@ public class PasswordEncoderTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    private static String PASSWORD = "신동훈ShinDongHun";
+    private static String PASSWORD = "bellwin";
 
     @Test
     public void 패스워드_암호화() throws Exception {
